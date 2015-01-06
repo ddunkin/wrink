@@ -1,0 +1,26 @@
+{
+    "appKeys": {},
+    "capabilities": [
+        "configurable"
+    ],
+    "companyName": "me@davedunkin.com",
+    "longName": "Wrink",
+    "projectType": "pebblejs",
+    "resources": {
+        "media": [
+            {
+                "file": "images/menu-icon.png",
+                "menuIcon": true,
+                "name": "IMAGES_MENU_ICON_PNG",
+                "type": "png"
+            }
+        ]
+    },
+    "shortName": "Wrink",
+    "uuid": "6d190ceb-6914-4927-94c5-894192ba43f1",
+    "versionCode": 1,
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": false
+    }
+}
