@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Wrink Settings</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+  </head>
+  <body>
+    <div data-role="page" id="main">
+      <div data-role="header" class="jqm-header">
+        <h1>Wrink Settings</h1>
+      </div>
+
+      <div data-role="content">
+
+        <div data-role="fieldcontain">
+          <label for="username">Wink email:</label>
+          <input type="email" name="username" id="username">
+        </div>
+        <div data-role="fieldcontain">
+          <label for="password">Password:</label>
+          <input type="password" name="password" id="password">
+        </div>
+
+        <div class="ui-body ui-body-b">
+          <button type="submit" data-theme="a" id="b-submit">Sign In</button>
+        </div>
+
+      </div>
+
+    </div>
+    <script>
+      $().ready(function() {
+        $('#b-submit').click(function() {
+          console.log('Signing in');
+          $.mobile.loading('show');
+
+          var username = $('#username').val();
+          var password = $('#password').val();
+          $.ajax({
+            url: 'https://winkapi.quirky.com/oauth2/token',
+            type: 'post',
+            data: {
+              'client_id': 'quirky_wink_ios_app',
+              'client_secret': 'ce609edf5e85015d393e7859a38056fe',
+              'username': username,
+              'password': password,
+              'grant_type': 'password'
+            },
+            success: function(data) {
+              $.mobile.loading('hide');
+              var authData = {
+                username: username,
+                accessToken: data.data.access_token
+              };
+              console.log(authData);
+              var location = 'pebblejs://close#' + encodeURIComponent(JSON.stringify(authData));
+              document.location = location;
+            },
+            error: function(xhr, status, error) {
+              $.mobile.loading('hide');
+              console.log(error);
+              alert(xhr.status == 400 ? 'Incorrect username or password' : error);
+            }
+          });
+        });
+
+        var rawConfig = decodeURIComponent(window.location.hash.substring(1));
+        // console.log(rawConfig);
+        var config = $.parseJSON(rawConfig);
+        console.log(JSON.stringify(config));
+        for (key in config) {
+          $('#' + key).val(config[key]);
+        }
+      });
+    </script>
+  </body>
+</html>
