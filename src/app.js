@@ -77,7 +77,7 @@ if (!accessToken) {
           errorCard.show();
         });
       }
-    } else if (e.sectionIndex === scenesSectionIndex) {
+    } else if (e.sectionIndex === devicesSectionIndex) {
       var deviceIndex = e.itemIndex;
       var device = devices[deviceIndex];
       console.log(JSON.stringify(device));
